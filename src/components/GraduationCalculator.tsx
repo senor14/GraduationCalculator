@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AlertCircle } from "lucide-react";
-import { Course, CourseType, CoursesByType } from "../types";
+import { Course } from "../types";
 import {
   GRADUATION_REQUIREMENTS,
   MAJOR_TYPES,
@@ -15,7 +15,7 @@ const GraduationCalculator = () => {
   // 기본값으로 초기화
   const [majorType, setMajorType] = useState("single");
   const [isTeachingMajor, setIsTeachingMajor] = useState(false);
-  const [coursesByType, setCoursesByType] = useState<CoursesByType>({
+  const [coursesByType, setCoursesByType] = useState({
     기교: [],
     심교: [],
     전필: [],
@@ -47,14 +47,20 @@ const GraduationCalculator = () => {
     localStorage.setItem("coursesByType", JSON.stringify(coursesByType));
   }, [majorType, isTeachingMajor, coursesByType]);
 
-  const handleAddCourse = (type: CourseType, course: Course) => {
+  const handleAddCourse = (
+    type: keyof typeof GRADUATION_REQUIREMENTS,
+    course: Course
+  ) => {
     setCoursesByType((prev) => ({
       ...prev,
       [type]: [...prev[type], course],
     }));
   };
 
-  const handleRemoveCourse = (type: CourseType, courseId: string) => {
+  const handleRemoveCourse = (
+    type: keyof typeof GRADUATION_REQUIREMENTS,
+    courseId: string
+  ) => {
     setCoursesByType((prev) => ({
       ...prev,
       [type]: prev[type].filter((course) => course.id !== courseId),
@@ -62,7 +68,7 @@ const GraduationCalculator = () => {
   };
 
   const handleUpdateCourse = (
-    type: CourseType,
+    type: keyof typeof GRADUATION_REQUIREMENTS,
     courseId: string,
     updatedCourse: Course
   ) => {
