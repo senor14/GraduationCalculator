@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AlertCircle } from "lucide-react";
-import { Course } from "../types";
+import { Course, CoursesByType } from "../types";
 import {
   GRADUATION_REQUIREMENTS,
   MAJOR_TYPES,
@@ -15,7 +15,7 @@ const GraduationCalculator = () => {
   // 기본값으로 초기화
   const [majorType, setMajorType] = useState("single");
   const [isTeachingMajor, setIsTeachingMajor] = useState(false);
-  const [coursesByType, setCoursesByType] = useState({
+  const [coursesByType, setCoursesByType] = useState<CoursesByType>({
     기교: [],
     심교: [],
     전필: [],
