@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AlertCircle } from "lucide-react";
-import { Course, CoursesByType } from "../types";
+import { Course, CourseType, CoursesByType } from "../types";
 import {
   GRADUATION_REQUIREMENTS,
   MAJOR_TYPES,
@@ -47,14 +47,14 @@ const GraduationCalculator = () => {
     localStorage.setItem("coursesByType", JSON.stringify(coursesByType));
   }, [majorType, isTeachingMajor, coursesByType]);
 
-  const handleAddCourse = (type: string, course: Course) => {
+  const handleAddCourse = (type: CourseType, course: Course) => {
     setCoursesByType((prev) => ({
       ...prev,
       [type]: [...prev[type], course],
     }));
   };
 
-  const handleRemoveCourse = (type: string, courseId: string) => {
+  const handleRemoveCourse = (type: CourseType, courseId: string) => {
     setCoursesByType((prev) => ({
       ...prev,
       [type]: prev[type].filter((course) => course.id !== courseId),
@@ -62,7 +62,7 @@ const GraduationCalculator = () => {
   };
 
   const handleUpdateCourse = (
-    type: string,
+    type: CourseType,
     courseId: string,
     updatedCourse: Course
   ) => {

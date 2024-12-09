@@ -14,14 +14,17 @@ export type CourseSectionProps = {
   onUpdateCourse: (courseId: string, course: Course) => void;
 };
 
+export type CourseType =
+  | "기교"
+  | "심교"
+  | "전필"
+  | "전선"
+  | "일선"
+  | "다지"
+  | "다필선"
+  | "부필선"
+  | "교생실습";
+
 export type CoursesByType = {
-  기교: Course[];
-  심교: Course[];
-  전필: Course[];
-  전선: Course[];
-  일선: Course[];
-  다지: Course[];
-  다필선: Course[];
-  부필선: Course[];
-  교생실습: Course[];
+  [key in CourseType]: Course[];
 };
