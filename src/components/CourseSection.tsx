@@ -36,7 +36,7 @@ export const CourseSection = ({
   const remaining = Math.max(0, required - totalCredits);
 
   return (
-    <div className="space-y-2 bg-white rounded-lg p-4 border border-gray-200">
+    <div className="space-y-2 bg-white rounded-lg p-4 border border-gray-200 flex flex-col">
       <div className="flex items-center justify-between mb-3">
         <div className="font-medium text-sm text-gray-900">
           {title} ({totalCredits}/{required}학점)
@@ -51,78 +51,86 @@ export const CourseSection = ({
       </div>
 
       {/* 기존 과목 목록 */}
-      <div className="space-y-2">
+      <div className="space-y-2 flex-1 overflow-y-auto">
         {courses.map((course) => (
-          <div key={course.id} className="flex items-center space-x-2">
-            <input
-              value={course.name}
-              onChange={(e) =>
-                onUpdateCourse(course.id, { ...course, name: e.target.value })
-              }
-              placeholder="과목명"
-              className="flex-1 px-3 py-2 border rounded-md text-gray-900 bg-white"
-            />
-            <input
-              type="number"
-              min="0"
-              step="1"
-              value={course.credits}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (
-                  value === "" ||
-                  (Number(value) >= 0 && Number.isInteger(Number(value)))
-                ) {
-                  onUpdateCourse(course.id, {
-                    ...course,
-                    credits: Number(value) || 0,
-                  });
+          <div key={course.id} className="flex items-center justify-between">
+            <div className="flex-1 mr-4 overflow-hidden">
+              <textarea
+                value={course.name}
+                onChange={(e) =>
+                  onUpdateCourse(course.id, { ...course, name: e.target.value })
                 }
-              }}
-              placeholder="학점"
-              className="w-20 px-3 py-2 border rounded-md text-gray-900 bg-white"
-            />
-            <button
-              onClick={() => onRemoveCourse(course.id)}
-              className="p-2 text-red-500 hover:text-red-700 bg-white rounded-md hover:bg-red-50"
-            >
-              <MinusCircle className="h-5 w-5" />
-            </button>
+                placeholder="과목명"
+                className="w-full h-12 px-3 py-2 border rounded-md text-gray-900 bg-white resize-none overflow-auto"
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={course.credits}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (
+                    value === "" ||
+                    (Number(value) >= 0 && Number.isInteger(Number(value)))
+                  ) {
+                    onUpdateCourse(course.id, {
+                      ...course,
+                      credits: Number(value) || 0,
+                    });
+                  }
+                }}
+                placeholder="학점"
+                className="w-20 px-3 py-2 border rounded-md text-gray-900 bg-white"
+              />
+              <button
+                onClick={() => onRemoveCourse(course.id)}
+                className="p-2 text-red-500 hover:text-red-700 bg-white rounded-md hover:bg-red-50"
+              >
+                <MinusCircle className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
       {/* 새 과목 추가 */}
-      <div className="flex items-center space-x-2 mt-3">
-        <input
-          value={newCourseName}
-          onChange={(e) => setNewCourseName(e.target.value)}
-          placeholder="새 과목명"
-          className="flex-1 px-3 py-2 border rounded-md text-gray-900 bg-white"
-        />
-        <input
-          type="number"
-          min="0"
-          step="1"
-          value={newCourseCredits}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (
-              value === "" ||
-              (Number(value) >= 0 && Number.isInteger(Number(value)))
-            ) {
-              setNewCourseCredits(value);
-            }
-          }}
-          placeholder="학점"
-          className="w-20 px-3 py-2 border rounded-md text-gray-900 bg-white"
-        />
-        <button
-          onClick={handleAdd}
-          className="p-2 text-blue-500 hover:text-blue-700 bg-white rounded-md hover:bg-blue-50"
-        >
-          <PlusCircle className="h-5 w-5" />
-        </button>
+      <div className="flex items-center justify-between mt-3">
+        <div className="flex-1 mr-4">
+          <input
+            value={newCourseName}
+            onChange={(e) => setNewCourseName(e.target.value)}
+            placeholder="새 과목명"
+            className="w-full px-3 py-2 border rounded-md text-gray-900 bg-white"
+          />
+        </div>
+        <div className="flex items-center space-x-2">
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={newCourseCredits}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (
+                value === "" ||
+                (Number(value) >= 0 && Number.isInteger(Number(value)))
+              ) {
+                setNewCourseCredits(value);
+              }
+            }}
+            placeholder="학점"
+            className="w-20 px-3 py-2 border rounded-md text-gray-900 bg-white"
+          />
+          <button
+            onClick={handleAdd}
+            className="p-2 text-blue-500 hover:text-blue-700 bg-white rounded-md hover:bg-blue-50"
+          >
+            <PlusCircle className="h-5 w-5" />
+          </button>
+        </div>
       </div>
     </div>
   );

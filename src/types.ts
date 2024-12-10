@@ -1,4 +1,19 @@
 // types.ts
+export type CourseType =
+  | "기교"
+  | "심교"
+  | "전필"
+  | "전선"
+  | "일선"
+  | "다지"
+  | "다필선"
+  | "부필선"
+  | "교생실습";
+
+export type CoursesByType = {
+  [key in CourseType]: Course[];
+};
+
 export type Course = {
   id: string;
   name: string;
